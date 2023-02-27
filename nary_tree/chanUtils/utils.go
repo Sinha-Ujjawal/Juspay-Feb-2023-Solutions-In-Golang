@@ -7,7 +7,8 @@ func MapPar[In any, Out any](in <-chan In, mapFn func(i In, clb func(Out))) <-ch
 	go func() {
 		wg := sync.WaitGroup{}
 		for i := range in {
-			go func(i In) {
+			wg.Add(1)
+			go func(i In, wg *sync.WaitGroup) {
 				mapFn(
 					i,
 					func(o Out) {
@@ -15,8 +16,7 @@ func MapPar[In any, Out any](in <-chan In, mapFn func(i In, clb func(Out))) <-ch
 						wg.Done()
 					},
 				)
-			}(i)
-			wg.Add(1)
+			}(i, &wg)
 		}
 		wg.Wait()
 		close(out)

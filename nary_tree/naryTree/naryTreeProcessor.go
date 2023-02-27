@@ -1,7 +1,6 @@
 package naryTree
 
 import (
-	"sync"
 	"treeOfSpace/chanUtils"
 )
 
@@ -27,16 +26,19 @@ func ProcessSeq[Req Request, Res any](
 ) <-chan Res {
 	tree := New(nodeIds, brachingFactor)
 	processor := func(request Req) Res {
+		var ret = false
+		var retPtr = &ret
 		switch request.Operation() {
 		case Lock:
-			return handler(request, tree.Lock(request.NodeId(), request.UserId()))
+			tree.Lock(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
 		case Unlock:
-			return handler(request, tree.Unlock(request.NodeId(), request.UserId()))
+			tree.Unlock(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
 		case Upgrade:
-			return handler(request, tree.Upgrade(request.NodeId(), request.UserId()))
+			tree.Upgrade(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
 		default:
-			return handler(request, false)
+			break
 		}
+		return handler(request, ret)
 	}
 	return chanUtils.Map(requests, processor)
 }
@@ -48,21 +50,17 @@ func ProcessPar[Req Request, Res any](
 	requests <-chan Req,
 ) <-chan Res {
 	tree := New(nodeIds, brachingFactor)
-	lock := sync.Mutex{}
 	processor := func(request Req, clb func(Res)) {
+		clb2 := func(b bool) {
+			clb(handler(request, b))
+		}
 		switch request.Operation() {
 		case Lock:
-			lock.Lock()
-			defer lock.Unlock()
-			clb(handler(request, tree.Lock(request.NodeId(), request.UserId())))
+			tree.Lock(request.NodeId(), request.UserId(), clb2)
 		case Unlock:
-			lock.Lock()
-			defer lock.Unlock()
-			clb(handler(request, tree.Unlock(request.NodeId(), request.UserId())))
+			tree.Unlock(request.NodeId(), request.UserId(), clb2)
 		case Upgrade:
-			lock.Lock()
-			defer lock.Unlock()
-			clb(handler(request, tree.Upgrade(request.NodeId(), request.UserId())))
+			tree.Upgrade(request.NodeId(), request.UserId(), clb2)
 		default:
 			clb(handler(request, false))
 		}
