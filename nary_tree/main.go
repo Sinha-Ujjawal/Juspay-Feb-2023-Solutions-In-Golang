@@ -8,22 +8,19 @@ import (
 	"strconv"
 	"strings"
 
+	"treeOfSpace/chanUtils"
 	"treeOfSpace/naryTree"
+	"treeOfSpace/sliceUtils"
 )
 
 type config struct {
-	inputFilePath          string
-	expectedOutputFilePath string
+	inputFilePath string
 }
 
 func getConfig() config {
 	inputFilePath := flag.String("inputFilePath", "", "filepath of the input")
-	expectedOutputFilePath := flag.String("expectedOutputFilePath", "", "filepath of the expected output")
 	flag.Parse()
-	return config{
-		inputFilePath:          *inputFilePath,
-		expectedOutputFilePath: *expectedOutputFilePath,
-	}
+	return config{inputFilePath: *inputFilePath}
 }
 
 func handleError(err error) {
@@ -32,114 +29,176 @@ func handleError(err error) {
 	}
 }
 
-func readLine(reader *bufio.Reader) string {
+func readLine(reader *bufio.Reader) (string, error) {
 	line, err := reader.ReadString('\n')
-	handleError(err)
-	return strings.TrimSpace(line)
-}
-
-func readLines(reader *bufio.Reader, n uint) []string {
-	var lines []string
-	for i := uint(0); i < n; i++ {
-		line := readLine(reader)
-		lines = append(lines, line)
+	if err == nil {
+		return strings.TrimSpace(line), nil
 	}
-	return lines
+	return line, err
 }
 
-func readInt(reader *bufio.Reader) int64 {
-	line := readLine(reader)
-	value, err := strconv.ParseInt(line, 10, 64)
-	handleError(err)
-	return value
+func readLines(reader *bufio.Reader, n uint) ([]string, error) {
+	lines := make([]string, n)
+	for i := uint(0); i < n; i++ {
+		line, err := readLine(reader)
+		if err != nil {
+			return nil, err
+		}
+		lines[i] = line
+	}
+	return lines, nil
 }
 
-func processFile(filePath *string) <-chan bool {
+func readInt(reader *bufio.Reader) (int64, error) {
+	line, err := readLine(reader)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.ParseInt(line, 10, 64)
+}
+
+type request struct {
+	idx       uint
+	operation naryTree.Operation
+	userId    naryTree.UserId
+	nodeId    naryTree.NodeId
+}
+
+func (r *request) Operation() naryTree.Operation {
+	return r.operation
+}
+
+func (r *request) UserId() naryTree.UserId {
+	return r.userId
+}
+
+func (r *request) NodeId() naryTree.NodeId {
+	return r.nodeId
+}
+
+type response struct {
+	request *request
+	result  bool
+}
+
+func mkResponse(request *request, result bool) response {
+	return response{request, result}
+}
+
+type treeInput struct {
+	nodeIds         []string
+	branchingFactor uint
+	requests        []request
+}
+
+func (tInput *treeInput) processInSeq(requests []request) []response {
+	if requests == nil {
+		requests = tInput.requests
+	}
+	return chanUtils.AsSlice(
+		naryTree.ProcessSeq(
+			tInput.nodeIds,
+			tInput.branchingFactor,
+			mkResponse,
+			sliceUtils.AsChannel(requests),
+		),
+	)
+}
+
+func (tInput *treeInput) processInPar(requests []request) []response {
+	if requests == nil {
+		requests = tInput.requests
+	}
+	return chanUtils.AsSlice(
+		naryTree.ProcessPar(
+			tInput.nodeIds,
+			tInput.branchingFactor,
+			mkResponse,
+			sliceUtils.AsChannel(requests),
+		),
+	)
+}
+
+func parseFile(filePath *string) (*treeInput, error) {
 	file, err := os.Open(*filePath)
-	handleError(err)
-	stdInReader := bufio.NewReader(file)
+	if err != nil {
+		return nil, err
+	}
 
-	numNodes := uint(readInt(stdInReader))
-	branchingFactor := uint(readInt(stdInReader))
-	numQueries := uint(readInt(stdInReader))
-	nodes := readLines(stdInReader, numNodes)
-	tree := naryTree.New(nodes, branchingFactor)
+	reader := bufio.NewReader(file)
 
-	in := make(chan string, numQueries)
-	out := make(chan bool, numQueries)
+	numNodes, err := readInt(reader)
+	if err != nil {
+		return nil, err
+	}
 
-	go func() {
-		for q := uint(0); q < numQueries; q++ {
-			line := readLine(stdInReader)
-			in <- line
+	branchingFactor, err := readInt(reader)
+	if err != nil {
+		return nil, err
+	}
+
+	numQueries, err := readInt(reader)
+	if err != nil {
+		return nil, err
+	}
+
+	nodeIds, err := readLines(reader, uint(numNodes))
+	if err != nil {
+		return nil, err
+	}
+
+	requests := make([]request, numQueries)
+	for q := int64(0); q < numQueries; q++ {
+		line, err := readLine(reader)
+		if err != nil {
+			return nil, err
 		}
-		close(in)
-	}()
 
-	go func() {
-		for s := range in {
-			line := strings.Split(s, " ")
-			opCode := line[0]
-			nodeId := line[1]
-			userId, err := strconv.ParseInt(line[2], 10, 64)
-			handleError(err)
-			var b bool
-			switch opCode {
-			case "1":
-				b = tree.Lock(nodeId, userId)
-			case "2":
-				b = tree.Unlock(nodeId, userId)
-			case "3":
-				b = tree.Upgrade(nodeId, userId)
-			default:
-				panic(fmt.Sprintf("Did not recognize the opCode: %s", opCode))
-			}
-			out <- b
+		parts := strings.Split(line, " ")
+
+		opCode, err := strconv.ParseInt(parts[0], 10, 64)
+		if err != nil {
+			return nil, err
 		}
-		close(out)
-	}()
 
-	return out
+		nodeId := parts[1]
+
+		userId, err := strconv.ParseInt(parts[2], 10, 64)
+		if err != nil {
+			return nil, err
+		}
+
+		requests[q] = request{
+			idx:       uint(q),
+			operation: uint(opCode),
+			userId:    userId,
+			nodeId:    nodeId,
+		}
+	}
+	return &treeInput{
+		nodeIds:         nodeIds,
+		branchingFactor: uint(branchingFactor),
+		requests:        requests,
+	}, nil
 }
 
-func readExpectedOutput(filePath *string) <-chan bool {
-	file, err := os.Open(*filePath)
-	handleError(err)
-	stdInReader := bufio.NewReader(file)
-	out := make(chan bool)
-	go func() {
-		for {
-			line, err := stdInReader.ReadString('\n')
-			if err != nil {
-				break
-			}
-			line = strings.TrimSpace(line)
-			switch line {
-			case "true":
-				out <- true
-			case "false":
-				out <- false
-			default:
-				panic(fmt.Sprintf("Did not recognize the boolean string: %s", line))
-			}
-		}
-		close(out)
-	}()
-	return out
+func processFile(filePath *string, processInSeq bool) ([]response, error) {
+	tInput, err := parseFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+	if processInSeq {
+		return tInput.processInSeq(nil), nil
+	}
+	return tInput.processInPar(nil), nil
 }
 
 func main() {
 	config := getConfig()
 	fmt.Printf("Processing file: %s\n", config.inputFilePath)
-	fmt.Printf("Expected output file: %s\n", config.expectedOutputFilePath)
-	outputCh := processFile(&config.inputFilePath)
-	expectedOutCh := readExpectedOutput(&config.expectedOutputFilePath)
-	for result := range outputCh {
-		expectedResult := <-expectedOutCh
-		if result != expectedResult {
-			println("Test Failed!")
-			os.Exit(1)
-		}
+	responses, err := processFile(&config.inputFilePath, true)
+	handleError(err)
+	for _, response := range responses {
+		fmt.Printf("Request: %+v, Result: %t\n", response.request, response.result)
 	}
-	println("Test Success!")
 }

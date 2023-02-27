@@ -1,0 +1,405 @@
+278
+3
+124
+hzsdk
+tureg
+mdygo
+xebie
+dpmlr
+uiiyr
+msirm
+siitb
+ubimv
+diids
+jsdrv
+zpjdf
+abowo
+uilpr
+ehyfk
+odrhi
+uzhrd
+qzfxa
+fvlpo
+ajqhy
+ydroo
+vkvsd
+pheff
+xsnsx
+xervx
+tiexq
+qzoor
+afwyw
+kpnjc
+cgogi
+tciyf
+jnbfv
+jwyaa
+yckmv
+xnyzz
+cpgjr
+jnrqi
+ztrsx
+gipjv
+cyswa
+kiyoc
+udcrs
+iizuj
+gvpfg
+wunfh
+egtqz
+fvsic
+wsqke
+lyggi
+avsox
+mgbid
+lxxyg
+nailr
+whvwi
+iejxm
+uswxw
+dwewj
+ifhud
+rvvsm
+enbop
+gqhic
+xxisn
+clgle
+xtzpv
+teewa
+veolk
+xzjgp
+uxfda
+icapl
+arkvt
+gjenn
+twwjq
+nzswq
+btuvd
+bbjli
+ujkei
+lafec
+lrnad
+oynam
+qobjp
+simgu
+eayem
+dwcbs
+bblip
+izwuz
+vxhtj
+dozgu
+fnatf
+lizfv
+mecay
+ppkho
+nwhbt
+ngelb
+qelmk
+tuqgq
+wevxl
+mxbfx
+ywped
+upwmx
+xliie
+xlmmz
+gjjky
+xkrdf
+itiia
+fnoox
+psxma
+gryie
+nkcqq
+fxnib
+kbhop
+jgaml
+elecd
+axawx
+qcrvf
+rfsmx
+woawv
+fkvug
+yaoco
+xjqux
+llosd
+qleug
+anyeh
+pbzjn
+qktex
+wxcql
+lxzzz
+cfvzp
+oxzlu
+kckgr
+gozwl
+vwpok
+jkepk
+kvyga
+leapc
+mmtwl
+tegcb
+htbaq
+ntnev
+fcisj
+pwpdn
+omulz
+mdach
+eojtp
+qmzbw
+pkoog
+hbvlx
+ktkaq
+rckth
+gcvuf
+uecgh
+lrdui
+icjxv
+dxjbp
+eipvf
+ruxcd
+qxuax
+mthfx
+bwvfe
+cgwcz
+hcrog
+nuwpz
+xxikp
+rtpoc
+nlumu
+axuys
+ucvtj
+lyslz
+oudtl
+jdwsi
+boxqs
+fakje
+xcege
+eihwy
+lroyt
+slkku
+judpl
+zaflq
+ooikz
+eapmo
+txnkz
+ntjki
+uuojj
+ctsxw
+vyilj
+wnype
+evihm
+tigel
+ydirl
+upnse
+mmehb
+tduik
+khfmw
+jyckp
+slqvf
+iwgyo
+izsvu
+vvdzq
+zsvpq
+ctwhe
+oxpqq
+qttkk
+ezasv
+ltwco
+pqgcy
+lfass
+bnupq
+lrpwo
+dsxkm
+phiig
+xneod
+jijfk
+tmguo
+aahev
+wucej
+qgwfw
+snexo
+wvezy
+rwmep
+evngn
+nemlh
+pzrxv
+lxlvv
+lyoyl
+zkhjd
+ilqvy
+zxqin
+utyvc
+qjljj
+crvdz
+zjrpr
+yvjkf
+irnkm
+rveba
+uoxck
+dzfvu
+apbsi
+gctbe
+akgyt
+eahwp
+cbnrb
+xbwyv
+kzlsn
+dqsop
+smvvj
+asifm
+klzqu
+dpamw
+gveux
+nwlux
+ccofs
+hovay
+jblgy
+flujl
+faugy
+ohcfd
+zdpai
+socnx
+cejlv
+mbcxt
+rugts
+swikd
+dapfs
+lwple
+sujke
+wwdka
+sgbqi
+ssbyx
+uneoh
+qanbt
+rtiju
+bpvvs
+njbpb
+vqfbz
+jolcu
+mbvsq
+jwbtk
+stkff
+eutlh
+3 aahev 200
+2 ntnev 31
+3 jnbfv 491
+2 xzjgp 439
+1 oudtl 614
+2 cbnrb 230
+3 lafec 715
+2 gctbe 209
+3 leapc 276
+2 xervx 641
+2 lxlvv 585
+3 odrhi 187
+1 ehyfk 450
+3 mgbid 836
+2 ltwco 212
+1 zdpai 698
+3 xtzpv 990
+2 xneod 346
+1 ltwco 662
+1 diids 449
+3 xcege 6
+2 ntnev 303
+1 avsox 813
+3 txnkz 261
+3 vqfbz 495
+3 wevxl 259
+1 lyslz 2
+3 hcrog 732
+1 utyvc 570
+3 axuys 46
+1 jkepk 423
+3 rtiju 382
+1 nwhbt 454
+1 iizuj 792
+1 dapfs 645
+2 lrnad 769
+3 jolcu 689
+3 ztrsx 21
+3 iwgyo 62
+1 qxuax 538
+2 uilpr 429
+2 axawx 226
+3 rfsmx 458
+1 uzhrd 826
+2 dwcbs 214
+1 mxbfx 911
+2 cgogi 477
+1 upwmx 591
+1 axuys 476
+3 diids 800
+1 lyslz 698
+2 ntjki 269
+2 gqhic 660
+2 wvezy 765
+2 dapfs 104
+1 ntjki 872
+3 stkff 105
+3 stkff 211
+2 bbjli 85
+3 gctbe 188
+2 gcvuf 483
+1 qttkk 549
+2 fvsic 286
+2 crvdz 98
+1 omulz 919
+2 htbaq 647
+3 wevxl 940
+2 rvvsm 389
+2 htbaq 398
+3 fakje 305
+3 qgwfw 60
+1 nlumu 883
+2 akgyt 294
+1 ssbyx 221
+1 qttkk 332
+1 dapfs 187
+1 tiexq 881
+3 bpvvs 82
+3 snexo 370
+1 fnoox 655
+3 jkepk 280
+1 bpvvs 291
+2 odrhi 282
+1 ssbyx 159
+2 dwewj 451
+2 lxzzz 980
+2 ccofs 741
+3 lxzzz 427
+1 uxfda 158
+1 eipvf 499
+3 zdpai 172
+1 dxjbp 596
+3 gcvuf 221
+1 veolk 918
+1 nemlh 980
+3 ngelb 557
+2 ooikz 668
+3 vkvsd 232
+1 xnyzz 163
+1 hzsdk 935
+2 nuwpz 330
+1 lroyt 116
+1 odrhi 197
+2 wucej 350
+2 uneoh 138
+3 ydroo 77
+3 ifhud 414
+1 jwyaa 580
+3 fcisj 512
+3 dozgu 555
+1 btuvd 708
+1 oxzlu 505
+1 lxxyg 352
+2 egtqz 652
+2 ztrsx 450
+1 qttkk 680
+1 vkvsd 639
+3 bbjli 916
+2 rtiju 319
+3 psxma 714
+2 jgaml 256
+2 fcisj 708
+2 vkvsd 479
+1 pwpdn 229

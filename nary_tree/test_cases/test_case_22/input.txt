@@ -1,0 +1,821 @@
+115
+10
+703
+fodiy
+bdrno
+vgsrx
+uwcss
+tvhnk
+vywbc
+mnxtz
+ntcvd
+xocvh
+gbkro
+ylsho
+mvixw
+kpmka
+eqaiu
+ntvun
+mrerj
+ficwa
+ojjyg
+lqpiw
+jxhix
+qoojh
+ebuwo
+fdlgg
+iwzsr
+rgimu
+ctcni
+mtgnf
+bpseg
+nhcvm
+ohihb
+wrznn
+swlhs
+tfeoi
+uxedr
+okgup
+ikeqd
+rjxdj
+fjsmk
+yhwpq
+zapwc
+vxvcv
+spygw
+pjucx
+yorbe
+isrfq
+xchqs
+qmgtu
+ffnqz
+sheta
+sdqyf
+azsao
+agrnw
+lrkdu
+kyxlp
+vifwt
+geunx
+cfqzz
+xghty
+mrobh
+xcffe
+brijz
+luzus
+mbyyo
+aocnd
+zbfnm
+gyzlv
+ffnkz
+dpion
+yqocc
+qvvtg
+cpdrk
+qtxwv
+xebeh
+kbpgy
+ufrit
+ikguf
+aybbg
+nhhmg
+ddukx
+trwxu
+gnjat
+pyjgo
+xwvhk
+miqmi
+iiduy
+qrmzz
+xcxee
+vgena
+wixbi
+zmpie
+jcemv
+aoyzd
+dummf
+zlegt
+lfoqf
+dmsxh
+ndinu
+zynfp
+bevsq
+rnsxc
+vnhwt
+pbuwp
+ggfsa
+tlecz
+tyvix
+ebqkf
+zuvpd
+kzvjd
+hkple
+rwtqu
+xdtkb
+ayivs
+zvffw
+ezwlc
+dyhpd
+3 azsao 916
+2 zbfnm 730
+1 spygw 645
+2 ntcvd 24
+1 nhcvm 345
+2 xwvhk 266
+2 xocvh 683
+1 uxedr 578
+2 dmsxh 158
+3 ntvun 97
+3 xocvh 458
+2 gyzlv 841
+2 zlegt 875
+2 qtxwv 543
+2 tyvix 610
+2 iiduy 832
+1 spygw 796
+3 xwvhk 577
+2 fodiy 852
+2 kyxlp 855
+2 xwvhk 302
+1 ffnkz 505
+3 zuvpd 570
+1 bevsq 478
+2 gbkro 94
+2 gbkro 505
+1 dpion 636
+1 lqpiw 671
+1 cpdrk 513
+2 rgimu 323
+1 pjucx 637
+2 miqmi 23
+2 lqpiw 290
+1 sheta 27
+1 ayivs 591
+1 xcffe 967
+2 lfoqf 209
+2 fjsmk 554
+3 xocvh 876
+3 zynfp 206
+1 kzvjd 891
+1 fjsmk 257
+2 aybbg 727
+2 ojjyg 692
+3 lqpiw 309
+3 mvixw 542
+1 isrfq 192
+3 swlhs 177
+3 xghty 821
+2 mnxtz 421
+3 qmgtu 67
+3 azsao 113
+1 yqocc 998
+2 ikeqd 304
+2 qvvtg 194
+2 xocvh 523
+2 dummf 117
+2 ffnkz 906
+3 nhcvm 473
+2 okgup 953
+3 ndinu 704
+2 mnxtz 780
+3 iwzsr 723
+1 vgena 603
+2 hkple 554
+1 xwvhk 810
+1 nhcvm 756
+1 mrerj 646
+2 ebuwo 115
+2 fdlgg 822
+1 pyjgo 841
+2 dummf 60
+1 aocnd 533
+2 mtgnf 624
+1 geunx 362
+3 tyvix 575
+1 yorbe 855
+1 jxhix 542
+2 ojjyg 345
+3 zynfp 109
+2 qmgtu 251
+3 ohihb 89
+2 ndinu 564
+2 kyxlp 698
+2 ntcvd 431
+3 ojjyg 888
+3 vnhwt 140
+3 qmgtu 743
+3 zbfnm 300
+1 yorbe 578
+3 xghty 580
+1 lrkdu 331
+1 brijz 941
+3 ggfsa 59
+1 vgena 608
+2 qrmzz 988
+2 qmgtu 421
+2 ffnqz 659
+1 aoyzd 470
+3 lrkdu 577
+2 geunx 935
+1 pyjgo 438
+1 fjsmk 602
+1 bdrno 915
+1 mrobh 289
+1 xwvhk 511
+3 tlecz 357
+3 rnsxc 550
+3 azsao 351
+1 fdlgg 210
+3 ebqkf 563
+2 aocnd 4
+2 xcxee 886
+3 ggfsa 848
+1 xghty 47
+3 okgup 293
+2 ikguf 791
+2 qtxwv 720
+3 eqaiu 695
+2 tfeoi 288
+1 tlecz 218
+2 tfeoi 361
+3 zvffw 442
+1 agrnw 400
+1 rwtqu 322
+1 aocnd 202
+3 kpmka 94
+1 mrerj 828
+1 brijz 913
+2 dummf 59
+3 jxhix 846
+3 ebuwo 967
+1 vxvcv 415
+1 ojjyg 900
+1 mrerj 246
+3 bdrno 928
+2 aybbg 606
+1 pbuwp 131
+1 zlegt 61
+1 mvixw 171
+1 luzus 20
+3 mrobh 462
+3 bevsq 251
+2 aybbg 182
+3 uwcss 176
+1 qmgtu 412
+1 uwcss 549
+3 iwzsr 728
+2 bpseg 299
+3 zynfp 769
+1 dyhpd 928
+3 ffnqz 506
+3 mtgnf 804
+2 nhcvm 731
+3 mbyyo 90
+2 kpmka 519
+3 xghty 192
+2 xdtkb 176
+2 zvffw 602
+2 xocvh 687
+2 eqaiu 558
+1 mrobh 759
+3 luzus 76
+3 tlecz 866
+2 kbpgy 373
+3 ntcvd 299
+1 qmgtu 998
+2 agrnw 113
+2 azsao 89
+2 ctcni 1000
+1 dyhpd 20
+1 xwvhk 846
+3 qmgtu 65
+3 xghty 293
+2 nhcvm 669
+3 ikguf 812
+3 qmgtu 90
+2 vifwt 463
+3 xcxee 788
+2 ficwa 490
+2 xdtkb 934
+2 vifwt 161
+3 zbfnm 857
+3 iwzsr 435
+1 jxhix 214
+1 jcemv 356
+2 ebqkf 26
+3 tvhnk 778
+3 zuvpd 427
+2 mrobh 271
+3 isrfq 396
+3 dmsxh 920
+2 ikguf 921
+2 pbuwp 84
+2 aoyzd 321
+1 xdtkb 844
+1 kzvjd 256
+1 eqaiu 351
+1 ikeqd 726
+3 vifwt 309
+2 isrfq 156
+3 bevsq 578
+2 qtxwv 439
+3 nhhmg 290
+3 yorbe 229
+2 wrznn 377
+1 mrerj 819
+2 vgena 755
+2 qoojh 332
+1 agrnw 715
+2 ikguf 593
+3 cpdrk 489
+1 ezwlc 745
+2 ntvun 822
+1 mrerj 606
+1 eqaiu 529
+3 trwxu 644
+3 mrobh 932
+1 yhwpq 623
+2 lfoqf 535
+2 ndinu 514
+2 gyzlv 117
+1 ufrit 853
+2 xghty 944
+2 ntcvd 147
+3 ebuwo 679
+2 swlhs 341
+3 wixbi 114
+2 mrerj 591
+3 spygw 364
+1 ojjyg 207
+2 mrerj 743
+1 jcemv 33
+1 cfqzz 141
+3 ffnkz 44
+3 dummf 884
+1 zuvpd 875
+2 mtgnf 601
+2 ntvun 633
+2 vgena 599
+2 ebqkf 755
+3 xcxee 658
+3 kbpgy 381
+2 pjucx 64
+3 mrerj 965
+2 pbuwp 436
+2 sheta 317
+2 zmpie 44
+2 vywbc 147
+2 nhhmg 213
+2 ylsho 345
+3 ddukx 239
+3 lfoqf 238
+3 uxedr 392
+1 cpdrk 687
+2 qmgtu 815
+1 ohihb 541
+1 mtgnf 580
+3 wixbi 981
+2 jxhix 60
+1 vxvcv 674
+1 zvffw 623
+2 pyjgo 767
+3 zmpie 695
+1 yorbe 922
+2 dummf 969
+2 xghty 208
+2 tvhnk 584
+3 sdqyf 216
+1 uwcss 302
+1 rjxdj 67
+1 fdlgg 478
+1 kpmka 340
+3 aocnd 891
+1 zbfnm 748
+3 zvffw 135
+2 ddukx 292
+2 zynfp 592
+2 zapwc 966
+1 agrnw 792
+3 wixbi 125
+2 ikguf 469
+2 ffnqz 509
+3 ctcni 468
+1 kpmka 633
+2 vywbc 875
+1 ffnqz 136
+3 ntvun 371
+3 kpmka 352
+1 luzus 401
+3 trwxu 866
+3 mbyyo 700
+1 fjsmk 658
+1 qoojh 683
+2 qrmzz 811
+3 rgimu 820
+1 uwcss 723
+1 nhhmg 277
+1 zvffw 940
+1 zvffw 915
+2 gnjat 498
+3 rjxdj 576
+1 gyzlv 583
+2 vifwt 358
+2 qtxwv 586
+1 rgimu 552
+3 iwzsr 674
+1 xcxee 774
+3 dmsxh 625
+2 kpmka 926
+1 zmpie 236
+1 zapwc 625
+2 xwvhk 395
+1 qoojh 482
+3 ffnqz 948
+1 sdqyf 427
+3 gyzlv 491
+1 kbpgy 128
+3 mbyyo 543
+2 vifwt 417
+3 pjucx 926
+3 iiduy 577
+3 geunx 134
+2 xwvhk 532
+3 lrkdu 160
+1 fjsmk 3
+1 iwzsr 13
+3 fdlgg 299
+2 cfqzz 518
+3 miqmi 386
+2 dmsxh 921
+1 lqpiw 563
+1 rjxdj 684
+1 bpseg 47
+3 yqocc 475
+3 swlhs 988
+2 zvffw 42
+2 sdqyf 678
+3 vgena 307
+3 kpmka 101
+3 ctcni 7
+3 spygw 404
+2 qmgtu 919
+2 ndinu 109
+2 eqaiu 146
+2 xebeh 375
+1 fodiy 332
+3 swlhs 265
+3 qrmzz 686
+2 qtxwv 598
+1 luzus 391
+3 pyjgo 763
+3 dyhpd 184
+3 xcxee 224
+3 aocnd 988
+2 ikguf 901
+2 azsao 173
+1 miqmi 931
+2 fdlgg 380
+1 xocvh 69
+3 kyxlp 6
+1 luzus 706
+2 vnhwt 883
+3 eqaiu 152
+3 azsao 931
+3 luzus 988
+3 xcffe 579
+3 lqpiw 170
+2 brijz 975
+3 luzus 580
+1 qmgtu 289
+3 yorbe 673
+2 dummf 164
+1 gbkro 558
+1 tyvix 698
+2 ebuwo 279
+1 xebeh 267
+3 vxvcv 892
+1 ikeqd 686
+2 rnsxc 983
+1 qtxwv 563
+1 fdlgg 785
+2 zlegt 909
+2 qtxwv 843
+1 zvffw 538
+2 ntvun 991
+3 iwzsr 158
+1 aybbg 15
+3 bdrno 490
+2 rnsxc 127
+2 xocvh 55
+3 ikeqd 870
+2 tfeoi 254
+2 jcemv 559
+2 sdqyf 365
+2 cfqzz 844
+3 ddukx 371
+3 dyhpd 820
+1 ufrit 458
+1 ficwa 575
+1 luzus 190
+1 dpion 476
+1 mvixw 794
+3 ojjyg 758
+1 dummf 466
+2 xcffe 873
+3 eqaiu 47
+1 xwvhk 8
+1 xchqs 196
+1 wrznn 449
+1 isrfq 367
+2 geunx 767
+1 dpion 951
+2 mbyyo 988
+2 mtgnf 56
+1 spygw 969
+3 kzvjd 545
+2 mtgnf 419
+1 mnxtz 345
+3 qtxwv 546
+2 zlegt 669
+1 ohihb 742
+1 ezwlc 534
+1 uwcss 817
+1 luzus 469
+1 fodiy 687
+3 ficwa 264
+1 rgimu 750
+3 pbuwp 486
+2 vywbc 220
+2 mtgnf 394
+1 rjxdj 691
+2 rgimu 323
+3 aoyzd 472
+3 ikguf 29
+3 fjsmk 458
+1 aocnd 510
+2 ikguf 190
+3 rwtqu 26
+3 jxhix 267
+2 ojjyg 975
+1 mtgnf 4
+2 luzus 359
+1 jcemv 490
+2 zapwc 498
+1 ebqkf 198
+1 pjucx 561
+1 mbyyo 258
+2 kbpgy 573
+2 sdqyf 729
+2 isrfq 443
+3 rwtqu 760
+1 ndinu 207
+2 dpion 391
+3 isrfq 407
+3 pyjgo 898
+1 nhcvm 163
+2 agrnw 197
+1 ntvun 124
+1 qoojh 451
+1 gbkro 559
+1 zlegt 811
+1 uwcss 543
+1 rnsxc 735
+3 agrnw 356
+1 kyxlp 721
+2 rnsxc 748
+2 eqaiu 206
+1 tyvix 542
+3 tfeoi 552
+3 gyzlv 456
+2 uxedr 986
+1 okgup 89
+3 qvvtg 694
+2 dyhpd 304
+1 ezwlc 699
+1 tvhnk 318
+1 brijz 147
+1 ezwlc 165
+2 aybbg 977
+2 gbkro 314
+3 tlecz 63
+3 nhhmg 991
+3 xocvh 389
+1 aocnd 271
+3 hkple 993
+3 xchqs 828
+2 zvffw 690
+1 ntcvd 662
+1 tyvix 573
+3 bevsq 345
+1 mvixw 264
+3 tlecz 457
+3 dmsxh 224
+1 miqmi 346
+1 isrfq 756
+1 pjucx 65
+1 ezwlc 115
+1 ebuwo 115
+1 xdtkb 681
+2 kbpgy 399
+1 ffnkz 830
+2 spygw 291
+2 lqpiw 834
+2 trwxu 337
+3 nhhmg 731
+1 dummf 438
+2 eqaiu 930
+3 nhhmg 534
+3 ndinu 815
+2 pjucx 220
+3 luzus 839
+3 gbkro 54
+3 qtxwv 950
+1 vgena 36
+2 zmpie 281
+2 ikguf 764
+1 kyxlp 340
+3 ntvun 880
+2 qmgtu 970
+1 qvvtg 977
+1 agrnw 720
+1 fodiy 712
+2 xdtkb 29
+3 uwcss 253
+1 nhhmg 831
+3 vnhwt 33
+1 cfqzz 105
+2 qrmzz 273
+1 gnjat 843
+1 xchqs 835
+3 sheta 683
+3 fdlgg 216
+3 ntvun 715
+3 ikeqd 619
+2 mtgnf 980
+3 vifwt 892
+1 ylsho 66
+3 kpmka 77
+1 ggfsa 948
+3 ylsho 886
+1 isrfq 515
+2 zbfnm 921
+1 jcemv 648
+3 zlegt 760
+2 zvffw 494
+2 nhcvm 97
+2 ntcvd 804
+3 xcffe 466
+1 miqmi 588
+3 ntcvd 234
+3 yhwpq 548
+3 iwzsr 364
+3 xdtkb 248
+3 xdtkb 181
+1 ddukx 39
+3 ntvun 758
+3 vxvcv 234
+2 vnhwt 425
+1 fjsmk 104
+3 wixbi 444
+2 ggfsa 573
+3 sdqyf 539
+3 tvhnk 446
+1 xocvh 339
+3 trwxu 637
+1 vgsrx 499
+2 kpmka 679
+3 sdqyf 760
+1 tyvix 396
+2 miqmi 448
+1 wrznn 286
+3 ntcvd 745
+2 aocnd 337
+2 vgena 192
+3 yorbe 1
+1 agrnw 32
+1 xcffe 694
+1 xwvhk 436
+1 xwvhk 429
+2 vxvcv 404
+1 zuvpd 359
+3 ndinu 457
+3 gnjat 214
+2 ohihb 857
+2 ikeqd 430
+3 jcemv 975
+1 sdqyf 430
+3 iiduy 947
+1 tyvix 775
+3 hkple 660
+2 mtgnf 391
+1 vxvcv 855
+3 ntcvd 570
+1 zlegt 946
+3 bdrno 874
+1 nhhmg 341
+1 gbkro 550
+1 kbpgy 696
+2 nhhmg 304
+2 ntvun 427
+2 yorbe 15
+3 cfqzz 877
+3 ikeqd 364
+1 swlhs 686
+1 zbfnm 349
+1 iiduy 489
+1 ylsho 762
+1 yhwpq 650
+2 yorbe 989
+2 zvffw 692
+3 ggfsa 361
+3 aoyzd 725
+2 aoyzd 198
+3 ezwlc 411
+1 gbkro 234
+3 geunx 612
+2 mvixw 72
+2 zynfp 442
+2 xcxee 468
+3 fdlgg 24
+1 nhcvm 700
+3 gyzlv 587
+1 ayivs 498
+3 zlegt 567
+2 ntvun 830
+1 tvhnk 317
+2 ndinu 623
+2 gnjat 986
+3 zvffw 814
+2 eqaiu 462
+2 ntcvd 96
+2 xcxee 137
+1 ebuwo 867
+1 ntvun 398
+2 rjxdj 832
+1 tvhnk 384
+2 ficwa 654
+3 mrobh 710
+1 jcemv 923
+3 gbkro 187
+3 kyxlp 968
+2 kzvjd 409
+1 yhwpq 586
+2 aocnd 31
+1 ayivs 510
+3 kyxlp 991
+2 jxhix 737
+2 rwtqu 191
+1 xcxee 936
+3 zapwc 296
+1 mnxtz 481
+2 trwxu 797
+1 zbfnm 496
+1 iiduy 948
+2 ayivs 995
+2 vgsrx 22
+1 xcffe 979
+1 qtxwv 440
+3 ebqkf 54
+2 yqocc 431
+2 yqocc 293
+1 zlegt 457
+2 agrnw 847
+1 yorbe 158
+3 xghty 469
+1 ojjyg 520
+1 bpseg 422
+2 fdlgg 618
+1 jcemv 725
+2 ntvun 40
+2 trwxu 416
+2 dmsxh 308
+1 gyzlv 197
+1 ayivs 941
+2 fjsmk 118
+2 ficwa 655
+2 vifwt 349
+3 hkple 70
+1 ficwa 880
+2 nhcvm 481
+2 qoojh 791
+1 zapwc 187
+1 ohihb 776
+1 xchqs 737
+2 agrnw 370
+1 sheta 694
+1 ojjyg 830
+3 ufrit 98
+1 mvixw 353
+3 bdrno 235
+3 mrobh 454
+3 zuvpd 833
+3 qrmzz 140
+1 zbfnm 982
+2 ffnkz 486
+2 xdtkb 732
+3 ndinu 454
+3 vxvcv 373
+2 ojjyg 422
+2 aocnd 933
+3 ggfsa 784
+2 ctcni 921
