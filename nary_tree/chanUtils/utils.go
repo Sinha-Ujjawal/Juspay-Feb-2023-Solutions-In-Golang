@@ -9,9 +9,13 @@ func MapPar[In any, Out any](in <-chan In, mapFn func(i In, clb func(Out))) <-ch
 		for i := range in {
 			wg.Add(1)
 			go func(i In, wg *sync.WaitGroup) {
+				ch := make(chan bool, 1)
+				ch <- true
 				mapFn(
 					i,
 					func(o Out) {
+						<-ch
+						close(ch)
 						out <- o
 						wg.Done()
 					},
