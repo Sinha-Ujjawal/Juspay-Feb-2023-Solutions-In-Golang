@@ -1,8 +1,6 @@
 package naryTree
 
-import (
-	"treeOfSpace/chanUtils"
-)
+import "sync"
 
 type Operation = uint
 
@@ -25,22 +23,26 @@ func ProcessSeq[Req Request, Res any](
 	requests <-chan Req,
 ) <-chan Res {
 	tree := New(nodeIds, brachingFactor)
-	processor := func(request Req) Res {
-		var ret = false
-		var retPtr = &ret
-		switch request.Operation() {
-		case Lock:
-			tree.Lock(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
-		case Unlock:
-			tree.Unlock(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
-		case Upgrade:
-			tree.Upgrade(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
-		default:
-			break
+	out := make(chan Res)
+	go func() {
+		for request := range requests {
+			var ret = false
+			var retPtr = &ret
+			switch request.Operation() {
+			case Lock:
+				tree.Lock(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
+			case Unlock:
+				tree.Unlock(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
+			case Upgrade:
+				tree.Upgrade(request.NodeId(), request.UserId(), func(b bool) { *retPtr = b })
+			default:
+				break
+			}
+			out <- handler(request, ret)
 		}
-		return handler(request, ret)
-	}
-	return chanUtils.Map(requests, processor)
+		close(out)
+	}()
+	return out
 }
 
 func ProcessPar[Req Request, Res any](
@@ -50,20 +52,30 @@ func ProcessPar[Req Request, Res any](
 	requests <-chan Req,
 ) <-chan Res {
 	tree := New(nodeIds, brachingFactor)
-	processor := func(request Req, clb func(Res)) {
-		clb2 := func(b bool) {
-			clb(handler(request, b))
+	out := make(chan Res)
+	go func() {
+		wg := sync.WaitGroup{}
+		for request := range requests {
+			wg.Add(1)
+			go func(request Req) {
+				clb := func(b bool) {
+					out <- handler(request, b)
+					wg.Done()
+				}
+				switch request.Operation() {
+				case Lock:
+					tree.Lock(request.NodeId(), request.UserId(), clb)
+				case Unlock:
+					tree.Unlock(request.NodeId(), request.UserId(), clb)
+				case Upgrade:
+					tree.Upgrade(request.NodeId(), request.UserId(), clb)
+				default:
+					clb(false)
+				}
+			}(request)
 		}
-		switch request.Operation() {
-		case Lock:
-			tree.Lock(request.NodeId(), request.UserId(), clb2)
-		case Unlock:
-			tree.Unlock(request.NodeId(), request.UserId(), clb2)
-		case Upgrade:
-			tree.Upgrade(request.NodeId(), request.UserId(), clb2)
-		default:
-			clb(handler(request, false))
-		}
-	}
-	return chanUtils.MapPar(requests, processor)
+		wg.Wait()
+		close(out)
+	}()
+	return out
 }

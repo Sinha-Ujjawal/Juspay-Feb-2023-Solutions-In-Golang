@@ -30,24 +30,6 @@ func Zip[T any, U any](ts []T, us []U) []Pair[T, U] {
 	})
 }
 
-func And[T any](ts []T, checkFn func(T) bool) bool {
-	for _, t := range ts {
-		if !checkFn(t) {
-			return false
-		}
-	}
-	return true
-}
-
-func Or[T any](ts []T, checkFn func(T) bool) bool {
-	for _, t := range ts {
-		if checkFn(t) {
-			return true
-		}
-	}
-	return false
-}
-
 func Equal[T comparable](xs []T, ys []T) bool {
 	if len(xs) != len(ys) {
 		return false
