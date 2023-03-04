@@ -12,6 +12,7 @@ func (g *Graph) CanReach(frm Node, to Node) bool {
 		if n == to {
 			return true
 		}
+		visited[n] = true
 		for _, neighbor := range g.Neighbors(n) {
 			_, ok := visited[neighbor.To]
 			if ok {
