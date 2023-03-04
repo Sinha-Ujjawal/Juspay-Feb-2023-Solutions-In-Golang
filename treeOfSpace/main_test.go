@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strings"
 	"testing"
+	"treeOfSpace/naryTree"
 	"treeOfSpace/sliceUtils"
 )
 
@@ -66,7 +67,7 @@ func TestProcessingInSeq(t *testing.T) {
 		}
 		output := sliceUtils.Map(
 			outputResponses,
-			func(res response) bool { return res.result },
+			func(res naryTree.Response) bool { return res.Result },
 		)
 		expectedOutput, err := readOutputFile(outputFilePath)
 		if err != nil {
@@ -109,16 +110,16 @@ func TestProcessingInPar(t *testing.T) {
 
 		requestsSeq := sliceUtils.Map(
 			outputResponses,
-			func(res response) request { return *res.request },
+			func(res naryTree.Response) naryTree.Request { return res.Request },
 		)
 		output := sliceUtils.Map(
 			outputResponses,
-			func(res response) bool { return res.result },
+			func(res naryTree.Response) bool { return res.Result },
 		)
 
 		expectedOutput := sliceUtils.Map(
 			tInput.processInSeq(requestsSeq),
-			func(res response) bool { return res.result },
+			func(res naryTree.Response) bool { return res.Result },
 		)
 
 		if !sliceUtils.Equal(output, expectedOutput) {

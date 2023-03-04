@@ -1,23 +1,21 @@
 package naryTree
 
-import nodeM "treeOfSpace/node"
-
 type UserId = int64
 type NodeId = string
-type NodeIdx = uint
+type nodeIdx = uint
 
 type NaryTree struct {
-	nodes              []*nodeM.Node[UserId, NodeIdx]
+	nodes              []*node
 	brachingFactor     uint
-	nodeToIndexMapping map[NodeId]NodeIdx
+	nodeToIndexMapping map[NodeId]nodeIdx
 }
 
 func New(nodeIds []NodeId, brachingFactor uint) NaryTree {
 	nodeToIndexMapping := make(map[string]uint, len(nodeIds))
-	var nodes []*nodeM.Node[UserId, NodeIdx]
+	var nodes []*node
 	for idx, nodeId := range nodeIds {
 		nodeToIndexMapping[nodeId] = uint(idx)
-		node := nodeM.New[UserId, NodeIdx](nodeId)
+		node := newNode(nodeId)
 		nodes = append(nodes, &node)
 	}
 	return NaryTree{
@@ -27,15 +25,15 @@ func New(nodeIds []NodeId, brachingFactor uint) NaryTree {
 	}
 }
 
-func (tree *NaryTree) parentOf(idx NodeIdx) NodeIdx {
+func (tree *NaryTree) parentOf(idx nodeIdx) nodeIdx {
 	return (idx - 1) / tree.brachingFactor
 }
 
-func (tree *NaryTree) firstChildOf(idx NodeIdx) NodeIdx {
+func (tree *NaryTree) firstChildOf(idx nodeIdx) nodeIdx {
 	return idx*tree.brachingFactor + 1
 }
 
-func (tree *NaryTree) ancestorsOf(nodeIdx NodeIdx) []NodeIdx {
+func (tree *NaryTree) ancestorsOf(nodeIdx nodeIdx) []nodeIdx {
 	if nodeIdx <= 0 {
 		return nil
 	}
@@ -51,7 +49,7 @@ func (tree *NaryTree) ancestorsOf(nodeIdx NodeIdx) []NodeIdx {
 	return ancestors
 }
 
-func (tree *NaryTree) getNodeIdx(nodeId NodeId) (*NodeIdx, bool) {
+func (tree *NaryTree) getNodeIdx(nodeId NodeId) (*nodeIdx, bool) {
 	nodeIdx, ok := tree.nodeToIndexMapping[nodeId]
 	if !ok {
 		return nil, false
@@ -70,34 +68,34 @@ func (tree *NaryTree) Lock(
 		return
 	}
 	node := tree.nodes[*nodeIdx]
-	nodeH := node.AcquireOperationWriteLock()
-	defer nodeH.ReleaseOperationLock()
-	var ancestorHs []nodeM.OperationReadLockNode[UserId, NodeIdx]
+	nodeH := node.acquireOperationWriteLock()
+	defer nodeH.releaseOperationLock()
+	var ancestorHs []operationReadLockNode
 	for _, ancestorIdx := range tree.ancestorsOf(*nodeIdx) {
 		ancestor := tree.nodes[ancestorIdx]
-		ancestorH := ancestor.AcquireOperationReadLock()
+		ancestorH := ancestor.acquireOperationReadLock()
 		ancestorHs = append(ancestorHs, ancestorH)
-		if ancestorH.IsLocked() {
+		if ancestorH.isLocked() {
 			clb(false)
 			for _, ancestorH = range ancestorHs {
-				ancestorH.ReleaseOperationLock()
+				ancestorH.releaseOperationLock()
 			}
 			return
 		}
 	}
-	if nodeH.IsLocked() || nodeH.AnyLockedDescendants() {
+	if nodeH.isLocked() || nodeH.anyLockedDescendants() {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.ReleaseOperationLock()
+			ancestorH.releaseOperationLock()
 		}
 		return
 	}
 
 	clb(true)
-	nodeH.Lock(userId)
+	nodeH.lock(userId)
 	for _, ancestorH := range ancestorHs {
-		ancestorH.ReleaseOperationLock()
-		ancestorH.AddDescedantLockingUser(userId, *nodeIdx)
+		ancestorH.releaseOperationLock()
+		ancestorH.addDescedantLockingUser(userId, *nodeIdx)
 	}
 	return
 }
@@ -113,35 +111,35 @@ func (tree *NaryTree) Unlock(
 		return
 	}
 	node := tree.nodes[*nodeIdx]
-	nodeH := node.AcquireOperationWriteLock()
-	defer nodeH.ReleaseOperationLock()
-	var ancestorHs []nodeM.OperationReadLockNode[UserId, NodeIdx]
+	nodeH := node.acquireOperationWriteLock()
+	defer nodeH.releaseOperationLock()
+	var ancestorHs []operationReadLockNode
 	for _, ancestorIdx := range tree.ancestorsOf(*nodeIdx) {
 		ancestor := tree.nodes[ancestorIdx]
-		ancestorH := ancestor.AcquireOperationReadLock()
+		ancestorH := ancestor.acquireOperationReadLock()
 		ancestorHs = append(ancestorHs, ancestorH)
 	}
-	if !nodeH.IsLocked() {
+	if !nodeH.isLocked() {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.ReleaseOperationLock()
+			ancestorH.releaseOperationLock()
 		}
 		return
 	}
-	lockingUser := nodeH.LockingUser()
-	if lockingUser == nil || *lockingUser != userId {
+	lockingUser := nodeH.lockingUser()
+	if lockingUser != userId {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.ReleaseOperationLock()
+			ancestorH.releaseOperationLock()
 		}
 		return
 	}
 
 	clb(true)
-	nodeH.Unlock()
+	nodeH.unlock()
 	for _, ancestorH := range ancestorHs {
-		ancestorH.ReleaseOperationLock()
-		ancestorH.RemoveDescedantLockingUser(userId, *nodeIdx)
+		ancestorH.releaseOperationLock()
+		ancestorH.removeDescedantLockingUser(userId, *nodeIdx)
 	}
 	return
 }
@@ -157,36 +155,36 @@ func (tree *NaryTree) Upgrade(
 		return
 	}
 	node := tree.nodes[*nodeIdx]
-	nodeH := node.AcquireOperationWriteLock()
-	defer nodeH.ReleaseOperationLock()
-	var ancestorHs []nodeM.OperationReadLockNode[UserId, NodeIdx]
+	nodeH := node.acquireOperationWriteLock()
+	defer nodeH.releaseOperationLock()
+	var ancestorHs []operationReadLockNode
 	for _, ancestorIdx := range tree.ancestorsOf(*nodeIdx) {
 		ancestor := tree.nodes[ancestorIdx]
-		ancestorH := ancestor.AcquireOperationReadLock()
+		ancestorH := ancestor.acquireOperationReadLock()
 		ancestorHs = append(ancestorHs, ancestorH)
 	}
-	if !nodeH.IsUpgradable(userId) {
+	if !nodeH.isUpgradable(userId) {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.ReleaseOperationLock()
+			ancestorH.releaseOperationLock()
 		}
 		return
 	}
 	clb(true)
-	nodeH.Lock(userId)
+	nodeH.lock(userId)
 	for _, ancestorH := range ancestorHs {
-		ancestorH.AddDescedantLockingUser(userId, *nodeIdx)
+		ancestorH.addDescedantLockingUser(userId, *nodeIdx)
 	}
-	for _, lockedDescendantIdx := range nodeH.LockedDescendants(userId) {
+	for _, lockedDescendantIdx := range nodeH.lockedDescendants(userId) {
 		lockedDescendant := tree.nodes[lockedDescendantIdx]
 		for _, ancestorIdx := range tree.ancestorsOf(lockedDescendantIdx) {
 			ancestor := tree.nodes[ancestorIdx]
-			ancestor.RemoveDescedantLockingUser(userId, lockedDescendantIdx)
+			ancestor.removeDescedantLockingUser(userId, lockedDescendantIdx)
 		}
-		lockedDescendant.Unlock()
+		lockedDescendant.unlock()
 	}
 	for _, ancestorH := range ancestorHs {
-		ancestorH.ReleaseOperationLock()
+		ancestorH.releaseOperationLock()
 	}
 	return
 }

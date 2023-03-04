@@ -1,157 +1,158 @@
-package node
+package naryTree
 
 import (
 	"sync"
 	"treeOfSpace/taggedSet"
 )
 
-type Node[U comparable, N comparable] struct {
+type node struct {
 	nodeId                           string
-	lockedBy                         *U
+	lockedBy                         UserId
+	isLocked                         bool
 	operationLock                    sync.RWMutex
-	descendantLockingUserMapping     *taggedSet.TaggedSet[U, N]
+	descendantLockingUserMapping     taggedSet.TaggedSet[UserId, nodeIdx]
 	descendantLockingUserMappingLock sync.RWMutex
 }
 
-func New[U comparable, N comparable](nodeId string) Node[U, N] {
-	descendantLockingUserMapping := taggedSet.New[U, N]()
-	return Node[U, N]{
+func newNode(nodeId string) node {
+	descendantLockingUserMapping := taggedSet.New[UserId, nodeIdx]()
+	return node{
 		nodeId:                           nodeId,
-		descendantLockingUserMapping:     &descendantLockingUserMapping,
+		isLocked:                         false,
+		descendantLockingUserMapping:     descendantLockingUserMapping,
 		operationLock:                    sync.RWMutex{},
 		descendantLockingUserMappingLock: sync.RWMutex{},
 	}
 }
 
-type OperationReadLockNode[U comparable, N comparable] struct {
-	node *Node[U, N]
+type operationReadLockNode struct {
+	node *node
 }
 
-func (node *Node[U, N]) AcquireOperationReadLock() OperationReadLockNode[U, N] {
+func (node *node) acquireOperationReadLock() operationReadLockNode {
 	node.operationLock.RLock()
-	return OperationReadLockNode[U, N]{node}
+	return operationReadLockNode{node}
 }
 
-type OperationWriteLockNode[U comparable, N comparable] struct {
-	node *Node[U, N]
+type operationWriteLockNode struct {
+	node *node
 }
 
-func (node *Node[U, N]) AcquireOperationWriteLock() OperationWriteLockNode[U, N] {
+func (node *node) acquireOperationWriteLock() operationWriteLockNode {
 	node.operationLock.Lock()
-	return OperationWriteLockNode[U, N]{node}
+	return operationWriteLockNode{node}
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) Lock(userId U) {
-	nodeH.node.lockedBy = &userId
+func (nodeH *operationWriteLockNode) lock(userId UserId) {
+	nodeH.node.lockedBy = userId
+	nodeH.node.isLocked = true
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) Unlock() *U {
-	oldUser := nodeH.node.lockedBy
-	nodeH.node.lockedBy = nil
-	return oldUser
-}
-
-func (node *Node[U, N]) Unlock() *U {
+func (node *node) unlock() UserId {
 	oldUser := node.lockedBy
-	node.lockedBy = nil
+	node.isLocked = false
 	return oldUser
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) ReleaseOperationLock() {
+func (nodeH *operationWriteLockNode) unlock() UserId {
+	return nodeH.node.unlock()
+}
+
+func (nodeH *operationWriteLockNode) releaseOperationLock() {
 	nodeH.node.operationLock.Unlock()
 }
 
-func (nodeH *OperationReadLockNode[U, N]) ReleaseOperationLock() {
+func (nodeH *operationReadLockNode) releaseOperationLock() {
 	nodeH.node.operationLock.RUnlock()
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) IsLocked() bool {
-	return nodeH.node.lockedBy != nil
+func (nodeH *operationWriteLockNode) isLocked() bool {
+	return nodeH.node.isLocked
 }
 
-func (nodeH *OperationReadLockNode[U, N]) IsLocked() bool {
-	return nodeH.node.lockedBy != nil
+func (nodeH *operationReadLockNode) isLocked() bool {
+	return nodeH.node.isLocked
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) LockingUser() *U {
+func (nodeH *operationWriteLockNode) lockingUser() UserId {
 	return nodeH.node.lockedBy
 }
 
-func (nodeH *OperationReadLockNode[U, N]) LockingUser() *U {
+func (nodeH *operationReadLockNode) lockingUser() UserId {
 	return nodeH.node.lockedBy
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) LockedDescendants(userId U) []N {
+func (nodeH *operationWriteLockNode) lockedDescendants(userId UserId) []nodeIdx {
 	nodeH.node.descendantLockingUserMappingLock.RLock()
 	defer nodeH.node.descendantLockingUserMappingLock.RUnlock()
 	return nodeH.node.descendantLockingUserMapping.Lookup(userId)
 }
 
-func (nodeH *OperationReadLockNode[U, N]) LockedDescendants(userId U) []N {
+func (nodeH *operationReadLockNode) lockedDescendants(userId UserId) []nodeIdx {
 	nodeH.node.descendantLockingUserMappingLock.RLock()
 	defer nodeH.node.descendantLockingUserMappingLock.RUnlock()
 	return nodeH.node.descendantLockingUserMapping.Lookup(userId)
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) AnyLockedDescendants() bool {
+func (nodeH *operationWriteLockNode) anyLockedDescendants() bool {
 	nodeH.node.descendantLockingUserMappingLock.RLock()
 	defer nodeH.node.descendantLockingUserMappingLock.RUnlock()
 	return nodeH.node.descendantLockingUserMapping.Size() > 0
 }
 
-func (nodeH *OperationReadLockNode[U, N]) AnyLockedDescendants() bool {
+func (nodeH *operationReadLockNode) anyLockedDescendants() bool {
 	nodeH.node.descendantLockingUserMappingLock.RLock()
 	defer nodeH.node.descendantLockingUserMappingLock.RUnlock()
 	return nodeH.node.descendantLockingUserMapping.Size() > 0
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) IsUpgradable(userId U) bool {
+func (nodeH *operationWriteLockNode) isUpgradable(userId UserId) bool {
 	nodeH.node.descendantLockingUserMappingLock.RLock()
 	defer nodeH.node.descendantLockingUserMappingLock.RUnlock()
-	return !nodeH.IsLocked() &&
+	return !nodeH.isLocked() &&
 		nodeH.node.descendantLockingUserMapping.NumTags() == 1 &&
 		nodeH.node.descendantLockingUserMapping.Contains(userId)
 }
 
-func (nodeH *OperationReadLockNode[U, N]) IsUpgradable(userId U) bool {
+func (nodeH *operationReadLockNode) isUpgradable(userId UserId) bool {
 	nodeH.node.descendantLockingUserMappingLock.RLock()
 	defer nodeH.node.descendantLockingUserMappingLock.RUnlock()
-	return !nodeH.IsLocked() &&
+	return !nodeH.isLocked() &&
 		nodeH.node.descendantLockingUserMapping.NumTags() == 1 &&
 		nodeH.node.descendantLockingUserMapping.Contains(userId)
 }
 
-func (node *Node[U, N]) AddDescedantLockingUser(userId U, nodeIdx N) {
+func (node *node) addDescedantLockingUser(userId UserId, nodeIdx nodeIdx) {
 	node.descendantLockingUserMappingLock.Lock()
 	node.descendantLockingUserMapping.AddEntry(userId, nodeIdx)
 	node.descendantLockingUserMappingLock.Unlock()
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) AddDescedantLockingUser(userId U, nodeIdx N) {
+func (nodeH *operationWriteLockNode) addDescedantLockingUser(userId UserId, nodeIdx nodeIdx) {
 	nodeH.node.descendantLockingUserMappingLock.Lock()
 	nodeH.node.descendantLockingUserMapping.AddEntry(userId, nodeIdx)
 	nodeH.node.descendantLockingUserMappingLock.Unlock()
 }
 
-func (nodeH *OperationReadLockNode[U, N]) AddDescedantLockingUser(userId U, nodeIdx N) {
+func (nodeH *operationReadLockNode) addDescedantLockingUser(userId UserId, nodeIdx nodeIdx) {
 	nodeH.node.descendantLockingUserMappingLock.Lock()
 	nodeH.node.descendantLockingUserMapping.AddEntry(userId, nodeIdx)
 	nodeH.node.descendantLockingUserMappingLock.Unlock()
 }
 
-func (node *Node[U, N]) RemoveDescedantLockingUser(userId U, nodeIdx N) {
+func (node *node) removeDescedantLockingUser(userId UserId, nodeIdx nodeIdx) {
 	node.descendantLockingUserMappingLock.Lock()
 	node.descendantLockingUserMapping.RemoveEntry(userId, nodeIdx)
 	node.descendantLockingUserMappingLock.Unlock()
 }
 
-func (nodeH *OperationWriteLockNode[U, N]) RemoveDescedantLockingUser(userId U, nodeIdx N) {
+func (nodeH *operationWriteLockNode) removeDescedantLockingUser(userId UserId, nodeIdx nodeIdx) {
 	nodeH.node.descendantLockingUserMappingLock.Lock()
 	nodeH.node.descendantLockingUserMapping.RemoveEntry(userId, nodeIdx)
 	nodeH.node.descendantLockingUserMappingLock.Unlock()
 }
 
-func (nodeH *OperationReadLockNode[U, N]) RemoveDescedantLockingUser(userId U, nodeIdx N) {
+func (nodeH *operationReadLockNode) removeDescedantLockingUser(userId UserId, nodeIdx nodeIdx) {
 	nodeH.node.descendantLockingUserMappingLock.Lock()
 	nodeH.node.descendantLockingUserMapping.RemoveEntry(userId, nodeIdx)
 	nodeH.node.descendantLockingUserMappingLock.Unlock()

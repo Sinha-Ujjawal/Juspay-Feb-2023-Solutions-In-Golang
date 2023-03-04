@@ -8,19 +8,20 @@ import (
 	"strconv"
 	"strings"
 
-	"treeOfSpace/chanUtils"
 	"treeOfSpace/naryTree"
 	"treeOfSpace/sliceUtils"
 )
 
 type config struct {
 	inputFilePath string
+	runInParallel bool
 }
 
 func getConfig() config {
 	inputFilePath := flag.String("inputFilePath", "", "filepath of the input")
+	runInParallel := flag.Bool("runInParallel", false, "if true, the requests will be submitted in parallel, hence can be out of order")
 	flag.Parse()
-	return config{inputFilePath: *inputFilePath}
+	return config{inputFilePath: *inputFilePath, runInParallel: *runInParallel}
 }
 
 func handleError(err error) {
@@ -57,66 +58,48 @@ func readInt(reader *bufio.Reader) (int64, error) {
 	return strconv.ParseInt(line, 10, 64)
 }
 
-type request struct {
-	idx       uint
-	operation naryTree.Operation
-	userId    naryTree.UserId
-	nodeId    naryTree.NodeId
-}
-
-func (r *request) Operation() naryTree.Operation {
-	return r.operation
-}
-
-func (r *request) UserId() naryTree.UserId {
-	return r.userId
-}
-
-func (r *request) NodeId() naryTree.NodeId {
-	return r.nodeId
-}
-
-type response struct {
-	request *request
-	result  bool
-}
-
-func mkResponse(request *request, result bool) response {
-	return response{request, result}
-}
-
 type treeInput struct {
 	nodeIds         []string
 	branchingFactor uint
-	requests        []request
+	requests        []naryTree.Request
 }
 
-func (tInput *treeInput) processInSeq(requests []request) []response {
+func (tInput *treeInput) processInSeq(requests []naryTree.Request) []naryTree.Response {
 	if requests == nil {
 		requests = tInput.requests
 	}
-	return chanUtils.AsSlice(
-		naryTree.ProcessSeq(
-			tInput.nodeIds,
-			tInput.branchingFactor,
-			mkResponse,
-			sliceUtils.AsChannel(requests),
-		),
+	requestCh := sliceUtils.AsChannel(requests)
+	responseCh := naryTree.ProcessSeq(
+		tInput.nodeIds,
+		tInput.branchingFactor,
+		requestCh,
 	)
+	responses := make([]naryTree.Response, len(tInput.requests))
+	i := 0
+	for response := range responseCh {
+		responses[i] = response
+		i += 1
+	}
+	return responses
 }
 
-func (tInput *treeInput) processInPar(requests []request) []response {
+func (tInput *treeInput) processInPar(requests []naryTree.Request) []naryTree.Response {
 	if requests == nil {
 		requests = tInput.requests
 	}
-	return chanUtils.AsSlice(
-		naryTree.ProcessPar(
-			tInput.nodeIds,
-			tInput.branchingFactor,
-			mkResponse,
-			sliceUtils.AsChannel(requests),
-		),
+	requestCh := sliceUtils.AsChannel(requests)
+	responseCh := naryTree.ProcessPar(
+		tInput.nodeIds,
+		tInput.branchingFactor,
+		requestCh,
 	)
+	responses := make([]naryTree.Response, len(tInput.requests))
+	i := 0
+	for response := range responseCh {
+		responses[i] = response
+		i += 1
+	}
+	return responses
 }
 
 func parseFile(filePath *string) (*treeInput, error) {
@@ -147,7 +130,7 @@ func parseFile(filePath *string) (*treeInput, error) {
 		return nil, err
 	}
 
-	requests := make([]request, numQueries)
+	requests := make([]naryTree.Request, numQueries)
 	for q := int64(0); q < numQueries; q++ {
 		line, err := readLine(reader)
 		if err != nil {
@@ -168,11 +151,10 @@ func parseFile(filePath *string) (*treeInput, error) {
 			return nil, err
 		}
 
-		requests[q] = request{
-			idx:       uint(q),
-			operation: uint(opCode),
-			userId:    userId,
-			nodeId:    nodeId,
+		requests[q] = naryTree.Request{
+			Operation: uint(opCode),
+			UserId:    userId,
+			NodeId:    nodeId,
 		}
 	}
 	return &treeInput{
@@ -182,7 +164,7 @@ func parseFile(filePath *string) (*treeInput, error) {
 	}, nil
 }
 
-func processFile(filePath *string, processInSeq bool) ([]response, error) {
+func processFile(filePath *string, processInSeq bool) ([]naryTree.Response, error) {
 	tInput, err := parseFile(filePath)
 	if err != nil {
 		return nil, err
@@ -196,9 +178,12 @@ func processFile(filePath *string, processInSeq bool) ([]response, error) {
 func main() {
 	config := getConfig()
 	fmt.Printf("Processing file: %s\n", config.inputFilePath)
-	responses, err := processFile(&config.inputFilePath, true)
+	if config.runInParallel {
+		fmt.Println("Processing concurrently")
+	}
+	responses, err := processFile(&config.inputFilePath, !config.runInParallel)
 	handleError(err)
 	for _, response := range responses {
-		fmt.Printf("Request: %+v, Result: %t\n", response.request, response.result)
+		fmt.Printf("Request: %+v, Result: %t\n", response.Request, response.Result)
 	}
 }
