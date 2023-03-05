@@ -8,7 +8,6 @@ type adjacencyMatrix = map[Node]associations
 type Graph struct {
 	adjacencyMatrix adjacencyMatrix
 	nodes           map[Node]bool
-	edges           []Edge
 }
 
 type Edge struct {
@@ -21,7 +20,6 @@ func MkGraph(edges []Edge, nodes []Node) Graph {
 	g := Graph{
 		adjacencyMatrix: adjacencyMatrix{},
 		nodes:           map[Node]bool{},
-		edges:           append([]Edge{}, edges...),
 	}
 	for _, edge := range edges {
 		g.AddEdge(edge)
@@ -83,5 +81,23 @@ func (g *Graph) Nodes() []Node {
 }
 
 func (g *Graph) Edges() []Edge {
-	return append([]Edge{}, g.edges...)
+	edges := []Edge{}
+	for u := range g.adjacencyMatrix {
+		assocs := g.adjacencyMatrix[u]
+		for v := range assocs {
+			edges = append(edges, Edge{Frm: u, To: v, Wt: assocs[v]})
+		}
+	}
+	return edges
+}
+
+func (g *Graph) ImmediateParents(n Node) map[Node]bool {
+	immediateParents := map[Node]bool{}
+	for u := range g.adjacencyMatrix {
+		_, ok := g.adjacencyMatrix[u][n]
+		if ok {
+			immediateParents[u] = true
+		}
+	}
+	return immediateParents
 }

@@ -166,6 +166,14 @@ func solveShortestTime(input string) {
 	}
 }
 
+func solveMinimumNeighborsToBlockToEnsureUnreachability(input string) {
+	simpleInput, err := parseSimpleGraphInput(input)
+	handleError(err)
+	for neighbor := range simpleInput.g.NeighborsToBlockToEnsureUnreachability(simpleInput.follower, simpleInput.following) {
+		fmt.Println(neighbor)
+	}
+}
+
 func main() {
 	solveFindReachability(`5
 1
@@ -191,6 +199,20 @@ func main() {
 1 5 2
 3 4 1
 4 5 1
+2
+5`)
+	solveMinimumNeighborsToBlockToEnsureUnreachability(`5
+1
+2
+3
+4
+5
+5
+2 1
+1 5
+1 3
+5 2
+4 5
 2
 5`)
 }
