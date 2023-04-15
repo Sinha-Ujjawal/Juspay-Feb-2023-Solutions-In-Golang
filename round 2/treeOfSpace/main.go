@@ -151,8 +151,19 @@ func parseFile(filePath *string) (*treeInput, error) {
 			return nil, err
 		}
 
+		var operation string
+
+		switch opCode {
+		case 1:
+			operation = naryTree.Lock
+		case 2:
+			operation = naryTree.Unlock
+		case 3:
+			operation = naryTree.Upgrade
+		}
+
 		requests[q] = naryTree.Request{
-			Operation: uint(opCode),
+			Operation: operation,
 			UserId:    userId,
 			NodeId:    nodeId,
 		}

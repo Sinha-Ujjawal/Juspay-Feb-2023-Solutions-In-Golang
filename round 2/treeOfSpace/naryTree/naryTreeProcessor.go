@@ -2,12 +2,12 @@ package naryTree
 
 import "sync"
 
-type Operation = uint
+type Operation = string
 
 const (
-	Lock    Operation = 1
-	Unlock            = 2
-	Upgrade           = 3
+	Lock    Operation = "Lock"
+	Unlock            = "Unlock"
+	Upgrade           = "Upgrade"
 )
 
 type Request struct {
