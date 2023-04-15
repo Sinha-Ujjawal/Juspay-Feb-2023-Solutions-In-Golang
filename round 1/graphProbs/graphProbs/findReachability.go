@@ -25,6 +25,7 @@ func (g *Graph) ReachableNodes(frm Node, blockedNodes map[Node]bool) <-chan Node
 						continue
 					}
 					nextFrontier = append(nextFrontier, neighbor.To)
+					visited[neighbor.To] = true
 				}
 			}
 			frontier = nextFrontier
