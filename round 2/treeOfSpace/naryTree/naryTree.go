@@ -68,17 +68,17 @@ func (tree *NaryTree) Lock(
 		return
 	}
 	node := tree.nodes[*nodeIdx]
-	nodeH := node.acquireOperationWriteLock()
-	defer nodeH.releaseOperationLock()
-	var ancestorHs []operationReadLockNode
+	nodeH := node.acquireWriteLock()
+	defer nodeH.releaseLock()
+	var ancestorHs []readLock
 	for _, ancestorIdx := range tree.ancestorsOf(*nodeIdx) {
 		ancestor := tree.nodes[ancestorIdx]
-		ancestorH := ancestor.acquireOperationReadLock()
+		ancestorH := ancestor.acquireReadLock()
 		ancestorHs = append(ancestorHs, ancestorH)
 		if ancestorH.isLocked() {
 			clb(false)
 			for _, ancestorH = range ancestorHs {
-				ancestorH.releaseOperationLock()
+				ancestorH.releaseLock()
 			}
 			return
 		}
@@ -86,7 +86,7 @@ func (tree *NaryTree) Lock(
 	if nodeH.isLocked() || nodeH.anyLockedDescendants() {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.releaseOperationLock()
+			ancestorH.releaseLock()
 		}
 		return
 	}
@@ -94,7 +94,7 @@ func (tree *NaryTree) Lock(
 	clb(true)
 	nodeH.lock(userId)
 	for _, ancestorH := range ancestorHs {
-		ancestorH.releaseOperationLock()
+		ancestorH.releaseLock()
 		ancestorH.addDescedantLockingUser(userId, *nodeIdx)
 	}
 	return
@@ -111,18 +111,18 @@ func (tree *NaryTree) Unlock(
 		return
 	}
 	node := tree.nodes[*nodeIdx]
-	nodeH := node.acquireOperationWriteLock()
-	defer nodeH.releaseOperationLock()
-	var ancestorHs []operationReadLockNode
+	nodeH := node.acquireWriteLock()
+	defer nodeH.releaseLock()
+	var ancestorHs []readLock
 	for _, ancestorIdx := range tree.ancestorsOf(*nodeIdx) {
 		ancestor := tree.nodes[ancestorIdx]
-		ancestorH := ancestor.acquireOperationReadLock()
+		ancestorH := ancestor.acquireReadLock()
 		ancestorHs = append(ancestorHs, ancestorH)
 	}
 	if !nodeH.isLocked() {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.releaseOperationLock()
+			ancestorH.releaseLock()
 		}
 		return
 	}
@@ -130,7 +130,7 @@ func (tree *NaryTree) Unlock(
 	if lockingUser != userId {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.releaseOperationLock()
+			ancestorH.releaseLock()
 		}
 		return
 	}
@@ -138,7 +138,7 @@ func (tree *NaryTree) Unlock(
 	clb(true)
 	nodeH.unlock()
 	for _, ancestorH := range ancestorHs {
-		ancestorH.releaseOperationLock()
+		ancestorH.releaseLock()
 		ancestorH.removeDescedantLockingUser(userId, *nodeIdx)
 	}
 	return
@@ -155,18 +155,18 @@ func (tree *NaryTree) Upgrade(
 		return
 	}
 	node := tree.nodes[*nodeIdx]
-	nodeH := node.acquireOperationWriteLock()
-	defer nodeH.releaseOperationLock()
-	var ancestorHs []operationReadLockNode
+	nodeH := node.acquireWriteLock()
+	defer nodeH.releaseLock()
+	var ancestorHs []readLock
 	for _, ancestorIdx := range tree.ancestorsOf(*nodeIdx) {
 		ancestor := tree.nodes[ancestorIdx]
-		ancestorH := ancestor.acquireOperationReadLock()
+		ancestorH := ancestor.acquireReadLock()
 		ancestorHs = append(ancestorHs, ancestorH)
 	}
 	if !nodeH.isUpgradable(userId) {
 		clb(false)
 		for _, ancestorH := range ancestorHs {
-			ancestorH.releaseOperationLock()
+			ancestorH.releaseLock()
 		}
 		return
 	}
@@ -184,7 +184,7 @@ func (tree *NaryTree) Upgrade(
 		lockedDescendant.unlock()
 	}
 	for _, ancestorH := range ancestorHs {
-		ancestorH.releaseOperationLock()
+		ancestorH.releaseLock()
 	}
 	return
 }
